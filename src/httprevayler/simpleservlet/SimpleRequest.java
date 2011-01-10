@@ -3,7 +3,6 @@ package httprevayler.simpleservlet;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
