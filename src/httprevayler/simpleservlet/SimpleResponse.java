@@ -13,5 +13,7 @@ public interface SimpleResponse {
 	PrintWriter getWriter() throws IOException;
 	
 	void writeEncodedResponse(String data) throws UnsupportedEncodingException, IOException;
+
+	void setHeader(String string, String string2);
 	
 }

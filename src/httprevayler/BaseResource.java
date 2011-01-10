@@ -11,18 +11,24 @@ public abstract class BaseResource {
 	protected SimpleResponse _response;
 	
 	public void service(SimpleRequest simpleRequest, SimpleResponse simpleResponse) throws Exception {
-		
 		configure(simpleRequest, simpleResponse);
-		
 		String method = simpleRequest.getMethod();
+		
+		if (!beforeService()) return;
+		
 		if (method.equals("GET")) respondToGet();
-		if (method.equals("POST")) doPost();
+		if (method.equals("POST")) respondToPost();
 		if (method.equals("DELETE")) doDelete();
 	}
 
+	protected abstract boolean beforeService() throws Exception;
+
 	private void respondToGet() throws Exception {
-		//writeEncoded(doGet());
-		_response.writeEncodedResponse(doGet().toString());
+		writeEncoded(doGet());
+	}
+	
+	private void respondToPost() throws Exception {
+		writeEncoded(doPost());
 	}
 
 	private void configure(SimpleRequest simpleRequest, SimpleResponse simpleResponse) {
@@ -32,11 +38,12 @@ public abstract class BaseResource {
 
 	protected Object doGet() throws Exception {
 		_response.setStatus(Response.SC_METHOD_NOT_ALLOWED);
-		return "";
+		return null;
 	}
 	
-	protected void doPost() throws Exception {
+	protected Object doPost() throws Exception {
 		_response.setStatus(Response.SC_METHOD_NOT_ALLOWED);
+		return null;
 	}
 
 	protected void doDelete() throws Exception {

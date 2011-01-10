@@ -32,4 +32,8 @@ public class DummySimpleResponse implements SimpleResponse {
 		getWriter().write(data);
 	}
 
+	@Override
+	public void setHeader(String string, String string2) {
+	}
+
 }

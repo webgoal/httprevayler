@@ -22,6 +22,7 @@ public class PrevalentServer {
 		int serverPort = Integer.parseInt(System.getProperty("server.port", "8888"));
 		_applicationServlet = new ApplicationServlet(application);
 		AbstractHandler handler = new AbstractHandler() { @Override public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+			System.out.println(target);
 			baseRequest.setHandled(true);
 			_applicationServlet.service(request, response);
 		}};

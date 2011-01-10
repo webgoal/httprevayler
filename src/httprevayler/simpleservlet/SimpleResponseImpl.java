@@ -33,4 +33,9 @@ public class SimpleResponseImpl implements SimpleResponse {
 	public void writeEncodedResponse(String data) throws UnsupportedEncodingException, IOException {
 		_response.getWriter().write(URLEncoder.encode(data, "UTF-8"));
 	}
+
+	@Override
+	public void setHeader(String header, String value) {
+		_response.setHeader(header, value);
+	}
 }

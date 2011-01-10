@@ -30,8 +30,7 @@ public class ApplicationServlet extends HttpServlet implements Servlet {
 	}
 
 	@Override
-	protected void service(HttpServletRequest request, HttpServletResponse response)
-			throws IOException {
+	protected void service(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		_prevalentSimpleServlet.service(new SimpleRequest(request),
 				new SimpleResponseImpl(response));
 	}

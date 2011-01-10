@@ -7,11 +7,13 @@ import httprevayler.simpleservlet.SimpleServlet;
 import org.eclipse.jetty.server.Response;
 
 import sneer.bricks.hardware.io.log.Logger;
+import sneer.bricks.hardware.io.log.exceptions.ExceptionLogger;
 import static sneer.foundation.environments.Environments.my;
 
 public class DispatcherSimpleServlet implements SimpleServlet {
 
 	private final String _resourcesPackage;
+	private String _baseUri = "/api/";
 
 	DispatcherSimpleServlet(String resourcesPackage) {
 		_resourcesPackage = resourcesPackage + ".";
@@ -21,7 +23,7 @@ public class DispatcherSimpleServlet implements SimpleServlet {
 	public void service(SimpleRequest simpleRequest, SimpleResponse simpleResponse)
 			throws Exception {
 		
-		String requestURI = afterSlash(simpleRequest.getRequestURI());
+		String requestURI = afterBaseUri(simpleRequest.getRequestURI());
 		my(Logger.class).log(simpleRequest.getMethod() + ": " + requestURI);
 				
 		String resourceClassName = resourceClassNameFor(requestURI);
@@ -30,11 +32,10 @@ public class DispatcherSimpleServlet implements SimpleServlet {
 			BaseResource resource = (BaseResource) Class.forName(resourceClassName).newInstance();
 			resource.service(simpleRequest, simpleResponse);
 		} catch (ClassNotFoundException e) {
-			my(Logger.class).log(e.getMessage());
+			my(ExceptionLogger.class).log(e);
 			simpleResponse.setStatus(Response.SC_NOT_FOUND);
-			simpleResponse.getWriter().write(e.getMessage());
+			simpleResponse.getWriter().write("Error: " + e.getMessage());
 		}
-		
 	}
 
 	private String resourceClassNameFor(String requestURI) {
@@ -46,8 +47,8 @@ public class DispatcherSimpleServlet implements SimpleServlet {
 		return result + "Resource";
 	}
 
-	private String afterSlash(String request) {
-		return tail(request);
+	private String afterBaseUri(String request) {
+		return request.substring(_baseUri.length());
 	}
 
 	private String tail(String request) {
