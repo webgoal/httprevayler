@@ -58,11 +58,10 @@ public class SimpleRequest implements Serializable {
 
 	public String getCookieValue(String name) {
 		try {
-			for (Cookie cookie : _cookies)
-				if (cookie.getName().equals(name)) {
-					System.out.println(URLDecoder.decode(cookie.getValue(), "UTF-8"));
-					return URLDecoder.decode(cookie.getValue(), "UTF-8");
-				}
+			if (_cookies != null)
+				for (Cookie cookie : _cookies)
+					if (cookie.getName().equals(name))
+						return URLDecoder.decode(cookie.getValue(), "UTF-8");
 		} catch (UnsupportedEncodingException e) { }
 		return null;
 	}

@@ -14,14 +14,14 @@ public abstract class BaseResource {
 		configure(simpleRequest, simpleResponse);
 		String method = simpleRequest.getMethod();
 		
-		if (!beforeService()) return;
+		beforeService();
 		
 		if (method.equals("GET")) respondToGet();
 		if (method.equals("POST")) respondToPost();
 		if (method.equals("DELETE")) doDelete();
 	}
 
-	protected abstract boolean beforeService() throws Exception;
+	protected abstract void beforeService() throws Exception;
 
 	private void respondToGet() throws Exception {
 		writeEncoded(doGet());
