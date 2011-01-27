@@ -11,6 +11,7 @@ import java.util.Date;
 
 import javax.servlet.http.HttpServletResponse;
 
+import sneer.bricks.hardware.io.log.exceptions.ExceptionLogger;
 import sneer.foundation.environments.Bindings;
 import sneer.foundation.environments.Environment;
 import sneer.foundation.environments.EnvironmentUtils;
@@ -47,6 +48,7 @@ public class SimpleCommand implements Serializable {
 			try {
 				_response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 				ex.printStackTrace(_response.getWriter());
+				my(ExceptionLogger.class).log(ex);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
